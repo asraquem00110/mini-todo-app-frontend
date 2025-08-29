@@ -3,6 +3,7 @@ import type { Task } from '@/types/Task';
 import { Link } from '@tanstack/react-router';
 import { LoadingOverlay } from '../ui/loading-overlay';
 import { TaskComponent } from './task';
+import { ErrorComponent } from '../error';
 
 export const TaskLists = () => {
   const { data, isLoading, error } = useGetTasks();
@@ -16,8 +17,8 @@ export const TaskLists = () => {
 
   if (error)
     return (
-      <div className="bg-destructive/15 text-destructive rounded-md p-4">
-        Error: {error.message}
+      <div className="flex h-screen w-screen items-center justify-center">
+        <ErrorComponent onClick={() => window.location.reload()} message={error.message} />
       </div>
     );
   return (
