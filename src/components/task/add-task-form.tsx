@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAddTask } from '@/hooks/mutation/add-task-mutation';
 import { useNavigate } from '@tanstack/react-router';
 import { usePrompt } from '@/contexts/prompt';
-// import { LoadingOverlay } from '../ui/loading-overlay';
+import { LoadingOverlay } from '../ui/loading-overlay';
 import { BlueButton } from '../ui/blue-button';
 import { ChevronLeftCircle } from 'lucide-react';
 
@@ -50,7 +50,7 @@ export const AddTaskForm = () => {
 
   return (
     <>
-      {/* <LoadingOverlay visible={isPending} /> */}
+      <LoadingOverlay visible={isPending} />
       <div className="mb-6 flex">
         <button
           type="button"
