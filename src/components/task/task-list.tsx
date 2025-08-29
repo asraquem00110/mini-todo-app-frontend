@@ -6,7 +6,7 @@ import { TaskComponent } from './task';
 import { ErrorComponent } from '../error';
 
 export const TaskLists = () => {
-  const { data, isLoading, error } = useGetTasks();
+  const { data, isLoading, error, refetch } = useGetTasks();
 
   if (isLoading)
     return (
@@ -18,7 +18,7 @@ export const TaskLists = () => {
   if (error)
     return (
       <div className="flex h-screen w-screen items-center justify-center">
-        <ErrorComponent onClick={() => window.location.reload()} message={error.message} />
+        <ErrorComponent onClick={() => refetch()} message={error.message} />
       </div>
     );
   return (
