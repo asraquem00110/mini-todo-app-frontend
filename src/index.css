@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+@theme {
+  --default-font-family: 'Poppins', sans-serif;
+
+  --color-gray-200: blue;
+  --color-custom-blue: green;
+}
+
+@layer base {
+}
+
+@layer components {
+  .test-custom-css {
+    p {
+      /* color: red; */
+      color: var(--color-custom-blue);
+      font-size: 20px;
+    }
+  }
+}
