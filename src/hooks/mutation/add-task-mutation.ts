@@ -7,7 +7,7 @@ export type UseAddTaskMutationArgs = MutationOptions<
   AddTaskArgs
 >;
 
-export function useAddTask(args?: UseAddTaskMutationArgs) {
+export function useAddTask(args: UseAddTaskMutationArgs = {}) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: addTask,

@@ -4,8 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAddTask } from '@/hooks/mutation/add-task-mutation';
 import { useNavigate } from '@tanstack/react-router';
 import { usePrompt } from '@/contexts/prompt';
-import { LoadingOverlay } from '../ui/loading-overlay';
+// import { LoadingOverlay } from '../ui/loading-overlay';
 import { BlueButton } from '../ui/blue-button';
+import { ChevronLeftCircle } from 'lucide-react';
 
 export const AddTaskSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -49,7 +50,16 @@ export const AddTaskForm = () => {
 
   return (
     <>
-      <LoadingOverlay visible={isPending} />
+      {/* <LoadingOverlay visible={isPending} /> */}
+      <div className="mb-6 flex">
+        <button
+          type="button"
+          className="flex cursor-pointer flex-row rounded px-4 py-2 text-gray-700 hover:bg-gray-300"
+          onClick={() => navigate({ to: '/' })}
+        >
+          <ChevronLeftCircle size={24} className="mr-2" /> Back
+        </button>
+      </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md space-y-4 rounded bg-white p-8 shadow-lg"

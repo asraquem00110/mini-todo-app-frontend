@@ -7,7 +7,7 @@ export const Route = createFileRoute('/add-task')({
 
 function RouteComponent() {
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen flex-col items-center justify-center">
       <AddTaskForm />
     </div>
   );
