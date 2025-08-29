@@ -9,8 +9,9 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export const YellowButton: React.FC<Props> = (input: Props) => {
   const { label, onClick } = input;
 
-  const throttledPress = useThrottle(onClick, 2000);
-
+  const throttledPress = useThrottle(() => {
+    if (onClick) onClick();
+  }, 1000);
   return (
     <button
       onClick={onClick ? throttledPress : () => null}
