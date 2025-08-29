@@ -3,6 +3,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAddTask } from '@/hooks/mutation/add-task-mutation';
 import { useNavigate } from '@tanstack/react-router';
+import { usePrompt } from '@/contexts/prompt';
+import { LoadingOverlay } from '../ui/loading-overlay';
+import { BlueButton } from '../ui/blue-button';
 
 export const AddTaskSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -13,13 +16,18 @@ export type AddTask = z.infer<typeof AddTaskSchema>;
 
 export const AddTaskForm = () => {
   const navigate = useNavigate();
+  const prompt = usePrompt();
   const { register, handleSubmit, formState } = useForm<AddTask>({
     resolver: zodResolver(AddTaskSchema),
   });
 
   const { mutate: addTaskMutate, isPending } = useAddTask({
-    onSuccess: () => {
-      alert('Task added successfully!');
+    onSuccess: data => {
+      prompt({
+        label: 'Ok',
+        message: `Task ${data.task.title} added successfully!`,
+        title: 'Success',
+      });
       if (formState.isSubmitSuccessful) {
         (document.activeElement as HTMLElement)?.blur();
       }
@@ -27,7 +35,12 @@ export const AddTaskForm = () => {
       return;
     },
     onError: error => {
-      alert(`Error adding task: ${error.message}`);
+      prompt({
+        title: 'Error adding task',
+        message: error.message,
+        label: 'Ok',
+        type: 'error',
+      });
       return;
     },
   });
@@ -37,42 +50,40 @@ export const AddTaskForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="w-full max-w-md space-y-4 rounded bg-white p-8 shadow-lg"
-    >
-      <h2 className="text-center text-2xl font-semibold text-gray-700">Add New Task</h2>
-
-      <div>
-        <input
-          placeholder="title"
-          type="text"
-          className="placeholder:text-base-400 mt-1 w-full rounded border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
-          {...register('title')}
-        />
-        {formState.errors.title?.message && (
-          <p className="text-sm text-red-500">{formState.errors.title?.message}</p>
-        )}
-      </div>
-
-      <div>
-        <textarea
-          placeholder="description"
-          rows={3}
-          className="placeholder:text-base-400 mt-1 w-full rounded border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
-          {...register('description')}
-        />
-        {formState.errors.description?.message && (
-          <p className="text-sm text-red-500">{formState.errors.description?.message}</p>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        className="w-full cursor-pointer rounded bg-blue-500 px-4 py-2 font-semibold text-white transition hover:bg-blue-600"
+    <>
+      <LoadingOverlay visible={isPending} />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md space-y-4 rounded bg-white p-8 shadow-lg"
       >
-        {isPending ? 'Adding...' : 'Add Task'}
-      </button>
-    </form>
+        <h2 className="text-center text-2xl font-semibold text-gray-700">Add New Task</h2>
+
+        <div>
+          <input
+            placeholder="title"
+            type="text"
+            className="placeholder:text-base-400 mt-1 w-full rounded border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
+            {...register('title')}
+          />
+          {formState.errors.title?.message && (
+            <p className="text-sm text-red-500">{formState.errors.title?.message}</p>
+          )}
+        </div>
+
+        <div>
+          <textarea
+            placeholder="description"
+            rows={3}
+            className="placeholder:text-base-400 mt-1 w-full rounded border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
+            {...register('description')}
+          />
+          {formState.errors.description?.message && (
+            <p className="text-sm text-red-500">{formState.errors.description?.message}</p>
+          )}
+        </div>
+
+        <BlueButton type="submit" label={isPending ? 'Adding...' : 'Add Task'} />
+      </form>
+    </>
   );
 };

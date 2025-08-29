@@ -1,13 +1,16 @@
 import { useGetTasks } from '@/hooks/query/use-get-tasks-query';
 import type { Task } from '@/types/Task';
 import { Link } from '@tanstack/react-router';
+import { LoadingOverlay } from '../ui/loading-overlay';
 
 export const TaskLists = () => {
   const { data, isLoading, error } = useGetTasks();
 
   if (isLoading)
     return (
-      <div className="text-muted-foreground flex items-center justify-center py-10">Loading...</div>
+      <div className="text-muted-foreground flex items-center justify-center py-10">
+        <LoadingOverlay visible={true} label="Loading..." />
+      </div>
     );
 
   if (error)

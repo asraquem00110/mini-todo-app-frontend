@@ -4,6 +4,9 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { LayoutsProvider } from '@/contexts/layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './index.css';
+// Import the generated route tree
+import { routeTree } from './routeTree.gen';
+import { PromptProvider } from '@/contexts/prompt';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -12,9 +15,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-// Import the generated route tree
-import { routeTree } from './routeTree.gen';
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -33,9 +33,11 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <LayoutsProvider>
-          <RouterProvider router={router} />
-        </LayoutsProvider>
+        <PromptProvider>
+          <LayoutsProvider>
+            <RouterProvider router={router} />
+          </LayoutsProvider>
+        </PromptProvider>
       </QueryClientProvider>
     </StrictMode>
   );
