@@ -32,7 +32,6 @@ export const AddTaskForm = () => {
         (document.activeElement as HTMLElement)?.blur();
       }
       navigate({ to: '/' });
-      return;
     },
     onError: error => {
       prompt({
@@ -41,7 +40,6 @@ export const AddTaskForm = () => {
         label: 'Ok',
         type: 'error',
       });
-      return;
     },
   });
 

@@ -2,6 +2,7 @@ import { useGetTasks } from '@/hooks/query/use-get-tasks-query';
 import type { Task } from '@/types/Task';
 import { Link } from '@tanstack/react-router';
 import { LoadingOverlay } from '../ui/loading-overlay';
+import { TaskComponent } from './task';
 
 export const TaskLists = () => {
   const { data, isLoading, error } = useGetTasks();
@@ -34,13 +35,7 @@ export const TaskLists = () => {
           </div>
         )}
         {data.tasks.map((task: Task) => (
-          <div
-            key={task.id}
-            className="rounded-lg bg-white p-4 shadow-md transition-all hover:shadow-lg"
-          >
-            <h3 className="text-xl font-semibold text-gray-900">{task.title}</h3>
-            <p className="mt-2 text-gray-700">{task.description}</p>
-          </div>
+          <TaskComponent task={task} key={task.id} />
         ))}
       </div>
     </div>

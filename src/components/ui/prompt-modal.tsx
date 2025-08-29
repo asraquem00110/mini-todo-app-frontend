@@ -22,7 +22,7 @@ export const PromptModal: React.FC<PromptArgs> = props => {
   return (
     <>
       {visible && (
-        <div className="pin bg-graydark bg-opacity-50 fixed flex h-screen w-screen overflow-auto">
+        <div className={cn('fixed inset-0 z-50 flex items-center justify-center bg-black/50')}>
           <div className="relative m-auto flex w-full max-w-md flex-col rounded-md bg-white p-8">
             <span
               className={cn(
@@ -32,7 +32,7 @@ export const PromptModal: React.FC<PromptArgs> = props => {
             >
               {title}
             </span>
-            <p className="mt-[20px] mb-[20px] text-[20px] font-medium">{message}</p>
+            <p className="mt-[20px] mb-[20px] text-center text-[20px] font-medium">{message}</p>
             <div className="mt-[20px]">
               {type === 'info' && <BlueButton onClick={closeModal} label={label} />}
               {type === 'error' && <RedButton onClick={closeModal} label={label} />}
