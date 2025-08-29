@@ -31,8 +31,9 @@ export const TaskLists = () => {
       </Link>
       <div className="space-y-4">
         {data.tasks.length === 0 && (
-          <div className="text-muted-foreground flex items-center justify-center py-10">
-            No tasks yet
+          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 py-10">
+            <span className="text-lg font-medium text-gray-500">No tasks yet</span>
+            <span className="mt-1 text-sm text-gray-400">Start by adding a new task!</span>
           </div>
         )}
         {data.tasks.map((task: Task) => (
